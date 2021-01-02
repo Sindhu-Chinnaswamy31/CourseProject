@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{%block content %}
+
+<div class="row">
+  <div class="col-sm-12">
+    <h3 class="text-center alert alert-info">Courses Details</h3>
+    {% if Course %}
+    <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">CourseName</th>
+        <th scope="col">Course Provider Name</th>
+        <th scope="col">CourseImage</th>
+        <th scope="col">CourseImageProvider</th>
+        <th scope="col">Category</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">End Date</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in Course %}
+      <tr>
+        <th scope="row">{{c.id}}</th>
+        <td>{{c.course_name}}</td>
+        <td>{{c.course_provider_name}}</td>
+        <td><img src="{{c.img_of_course.url}}" height="45px" width="45px" alt="no image"></td>
+        <td><img src="{{c.img_of_provider.url}}" alt="no image" height="45px" width="45px"></td>
+        <td>{{c.category}}</td>
+        <td>{{c.start_date}}</td>
+        <td>{{c.end_date}}</td>
+        <td>
+          <a href="{% url "update" c.id %}" class="btn btn-warning btn-sm">Edit</a>
+          <form class="d-inline" action="{% url "deletedata" c.id %}" method="post">
+            <input type="submit" class="btn btn-danger btn-sm" name="" value="delete">
+            {%csrf_token%}
+          </form>
+        </td>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+    {%else%}
+    <h4 class="text-center alert alert-warning">No Details</h4>
+    {% endif %}
+  </div>
+</div>
+{%endblock content %}
